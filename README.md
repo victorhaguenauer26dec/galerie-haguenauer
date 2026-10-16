@@ -1,6 +1,6 @@
-# Galerie R. Haguenauer
+# Galerie René HAGUENAUER
 
-Site statique en français pour présenter les tableaux et les dessins de R. Haguenauer. Il s’agit d’une galerie de découverte, sans prix, paiement ni vente en ligne.
+Site statique en français pour présenter les tableaux et les dessins de René HAGUENAUER. Il s’agit d’une galerie de découverte, sans prix, paiement ni vente en ligne.
 
 ## Publier avec GitHub Pages
 

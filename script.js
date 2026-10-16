@@ -16,12 +16,41 @@ const dialog = document.querySelector("#lightbox");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
 let activeArtworkIndex = 0;
+let featuredArtworkIndex = -1;
+
+function showRandomFeaturedArtwork() {
+  let nextIndex = Math.floor(Math.random() * artworks.length);
+  while (artworks.length > 1 && nextIndex === featuredArtworkIndex) {
+    nextIndex = Math.floor(Math.random() * artworks.length);
+  }
+
+  featuredArtworkIndex = nextIndex;
+  const artwork = artworks[featuredArtworkIndex];
+  const image = document.querySelector(".hero-artwork img");
+  image.src = artwork.src;
+  image.alt = `${artwork.label} de René HAGUENAUER`;
+  image.dataset.artworkIndex = String(featuredArtworkIndex);
+  document.querySelector(".hero-index").textContent =
+    `${String(featuredArtworkIndex + 1).padStart(2, "0")} / ${artworks.length}`;
+}
+
+showRandomFeaturedArtwork();
+
+window.addEventListener("hashchange", showRandomFeaturedArtwork);
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    if (link.hash === window.location.hash) {
+      showRandomFeaturedArtwork();
+    }
+  });
+});
 
 function showArtwork(index) {
   activeArtworkIndex = (index + artworks.length) % artworks.length;
   const artwork = artworks[activeArtworkIndex];
   lightboxImage.src = artwork.src;
-  lightboxImage.alt = `${artwork.label} de R. Haguenauer`;
+  lightboxImage.alt = `${artwork.label} de René HAGUENAUER`;
   lightboxTitle.textContent = artwork.label;
 }
 
@@ -36,7 +65,7 @@ artworks.forEach((artwork, index) => {
 
   const image = document.createElement("img");
   image.src = artwork.src;
-  image.alt = `${artwork.label} de R. Haguenauer`;
+  image.alt = `${artwork.label} de René HAGUENAUER`;
   image.loading = "lazy";
   image.decoding = "async";
 
