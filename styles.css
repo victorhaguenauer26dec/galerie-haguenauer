@@ -250,6 +250,16 @@ h2 {
   font-weight: 500;
 }
 
+.hero-caption .hero-artwork-year {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+.hero-artwork-year[hidden] {
+  display: none;
+}
+
 .hero-index {
   position: absolute;
   right: 7.5%;
@@ -336,6 +346,10 @@ h2 {
   color: var(--muted);
   font-size: 10px;
   letter-spacing: 0.05em;
+}
+
+.artwork-caption span:empty {
+  display: none;
 }
 
 .about-section {

@@ -6,17 +6,80 @@ const artworkNumbers = [
   947, 948,
 ];
 
+const artworkYears = {
+  781: 1985,
+  782: 1979,
+  783: 1978,
+  784: 1978,
+  786: 1996,
+  787: 2003,
+  789: 1978,
+  791: 1995,
+  792: 2003,
+  794: 2001,
+  795: 1996,
+  796: 1995,
+  839: 1999,
+  840: 2001,
+  841: 1993,
+  842: 1985,
+  843: 1985,
+  848: 2003,
+  849: 2001,
+  853: 1985,
+  854: 2000,
+  855: 1982,
+  857: 2001,
+  858: 1980,
+  859: 1979,
+  860: 1985,
+  861: 1987,
+  863: 1982,
+  923: 1996,
+  924: 2003,
+  925: 2003,
+  926: 1983,
+  928: 1992,
+  929: 1995,
+  930: 1972,
+  931: 1978,
+  934: 1981,
+  935: 2001,
+  936: 1981,
+  937: 1997,
+  938: 1997,
+  944: 1978,
+  945: 2000,
+  946: 1993,
+  947: 1995,
+  948: 1996,
+};
+
 const artworks = artworkNumbers.map((number, index) => ({
   src: `images/100_${String(number).padStart(4, "0")}.jpg`,
   label: `Œuvre ${String(index + 1).padStart(2, "0")}`,
+  year: artworkYears[number] ?? null,
 }));
 
 const grid = document.querySelector("#artwork-grid");
 const dialog = document.querySelector("#lightbox");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
+const lightboxYear = dialog.querySelector("#lightbox-year");
 let activeArtworkIndex = 0;
 let featuredArtworkIndex = -1;
+
+function appendYear(parent, year, className) {
+  if (!year) {
+    return null;
+  }
+
+  const element = document.createElement("span");
+  element.className = className;
+  element.textContent = year;
+  parent.append(element);
+  return element;
+}
 
 function showRandomFeaturedArtwork() {
   let nextIndex = Math.floor(Math.random() * artworks.length);
@@ -30,6 +93,10 @@ function showRandomFeaturedArtwork() {
   image.src = artwork.src;
   image.alt = `${artwork.label} de René HAGUENAUER`;
   image.dataset.artworkIndex = String(featuredArtworkIndex);
+  document.querySelector(".hero-caption strong").textContent = artwork.label;
+  const featuredYear = document.querySelector(".hero-artwork-year");
+  featuredYear.textContent = artwork.year ?? "";
+  featuredYear.hidden = !artwork.year;
   document.querySelector(".hero-index").textContent =
     `${String(featuredArtworkIndex + 1).padStart(2, "0")} / ${artworks.length}`;
 }
@@ -52,6 +119,7 @@ function showArtwork(index) {
   lightboxImage.src = artwork.src;
   lightboxImage.alt = `${artwork.label} de René HAGUENAUER`;
   lightboxTitle.textContent = artwork.label;
+  lightboxYear.textContent = artwork.year ? `· ${artwork.year}` : "";
 }
 
 artworks.forEach((artwork, index) => {
@@ -76,7 +144,10 @@ artworks.forEach((artwork, index) => {
   title.textContent = artwork.label;
 
   const number = document.createElement("span");
-  number.textContent = `${String(index + 1).padStart(2, "0")} / ${artworks.length}`;
+  number.textContent = [
+    artwork.year,
+    `${String(index + 1).padStart(2, "0")} / ${artworks.length}`,
+  ].filter(Boolean).join(" · ");
 
   button.append(image);
   caption.append(title, number);
