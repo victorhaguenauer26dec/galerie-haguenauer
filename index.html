@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f2eb">
+    <meta name="description" content="Découvrez les tableaux et dessins de R. Haguenauer dans une galerie en ligne dédiée à ses œuvres.">
+    <title>Galerie R. Haguenauer — Tableaux et dessins</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#accueil" aria-label="Galerie R. Haguenauer, accueil">
+        <span class="brand-mark" aria-hidden="true">R<span>.</span>H</span>
+        <span class="brand-name">Galerie <strong>R. Haguenauer</strong></span>
+      </a>
+      <nav class="main-nav" aria-label="Navigation principale">
+        <a href="#galerie">La galerie</a>
+        <a href="#apropos">À propos</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="accueil" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span aria-hidden="true"></span> Galerie en ligne</p>
+          <h1 id="hero-title">Des œuvres à découvrir,<br><em>simplement.</em></h1>
+          <p class="hero-intro">Une galerie pour parcourir les tableaux et les dessins de R. Haguenauer, et prendre le temps de les regarder.</p>
+          <a class="text-link" href="#galerie">Explorer les œuvres <span aria-hidden="true">↓</span></a>
+          <p class="hero-note">Un espace de découverte — aucune vente en ligne.</p>
+        </div>
+        <a class="hero-artwork" href="#galerie" aria-label="Découvrir la galerie">
+          <img src="images/100_0781.jpg" alt="Peinture de R. Haguenauer, paysage aux couleurs douces" fetchpriority="high">
+          <span class="hero-caption"><span>À découvrir</span><strong>Une œuvre parmi d’autres</strong></span>
+        </a>
+        <span class="hero-index" aria-hidden="true">01 / 62</span>
+      </section>
+
+      <section class="gallery-section" id="galerie" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Collection</p>
+            <h2 id="gallery-title">Les œuvres</h2>
+          </div>
+          <p class="gallery-count"><span id="artwork-count">62</span> œuvres à découvrir</p>
+        </div>
+        <div class="artwork-grid" id="artwork-grid" aria-label="Galerie des œuvres"></div>
+      </section>
+
+      <section class="about-section" id="apropos" aria-labelledby="about-title">
+        <div class="about-label">
+          <span class="about-line" aria-hidden="true"></span>
+          <p class="eyebrow">À propos de la galerie</p>
+        </div>
+        <div class="about-copy">
+          <h2 id="about-title">L’art, pour le plaisir de le partager.</h2>
+          <p>Cette galerie rassemble des tableaux et des dessins de R. Haguenauer. Elle a été créée pour permettre à chacun de les découvrir et de les apprécier.</p>
+          <p class="no-sales"><span aria-hidden="true">✳</span> Ce site est une galerie de présentation. Aucune œuvre n’y est proposée à la vente.</p>
+        </div>
+        <span class="about-ornament" aria-hidden="true">RH</span>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="#accueil">Galerie R. Haguenauer</a>
+      <p>Une galerie en ligne, simplement.</p>
+      <a href="#accueil" class="back-to-top">Retour en haut ↑</a>
+    </footer>
+
+    <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-title">
+      <button class="lightbox-close" type="button" aria-label="Fermer l’image agrandie">×</button>
+      <button class="lightbox-arrow lightbox-previous" type="button" aria-label="Voir l’œuvre précédente">←</button>
+      <figure class="lightbox-figure">
+        <img class="lightbox-image" src="" alt="">
+        <figcaption id="lightbox-title"></figcaption>
+      </figure>
+      <button class="lightbox-arrow lightbox-next" type="button" aria-label="Voir l’œuvre suivante">→</button>
+      <p class="lightbox-help">Utilisez les flèches du clavier pour parcourir les œuvres</p>
+    </dialog>
+  </body>
+</html>
