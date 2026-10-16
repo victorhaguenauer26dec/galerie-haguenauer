@@ -211,10 +211,10 @@ h2 {
 }
 
 .hero-caption {
-  align-self: flex-end;
+  align-self: stretch;
   display: grid;
   gap: 5px;
-  min-width: 205px;
+  min-width: 0;
   padding: 17px 21px;
   background: var(--paper);
 }
