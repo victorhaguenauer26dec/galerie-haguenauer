@@ -207,7 +207,8 @@ h2 {
   flex: 1;
   width: 100%;
   min-height: 0;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-caption {
