@@ -148,7 +148,6 @@ const artworks = artworkFiles.map((file, index) => {
     label: metadata.title || `Œuvre ${String(index + 1).padStart(2, "0")}`,
     year: metadata.year ?? null,
     type: metadata.type ?? "",
-    style: metadata.style ?? "",
     theme: metadata.theme ?? "",
     dimensions: metadata.dimensions ?? "",
   };
@@ -245,7 +244,6 @@ function showArtwork(index) {
     ["Année", artwork.year],
     ["Type d’œuvre", artwork.type],
     ["Titre de l’œuvre", artwork.title],
-    ["Style", artwork.style],
     ["Thématique", artwork.theme],
     ["Dimensions (cm)", artwork.dimensions],
   ].forEach(([label, value]) => {
