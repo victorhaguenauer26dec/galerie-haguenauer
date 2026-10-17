@@ -9,7 +9,8 @@ const artworkNumbers = [
 const artworkTypes = [
   "Aquarelle",
   "Huile",
-  "Gravure",
+  "Gravure sur métal",
+  "Gravure sur linoléum",
   "Dessin",
   "Dessin au fusain",
   "Dessin au crayon",
