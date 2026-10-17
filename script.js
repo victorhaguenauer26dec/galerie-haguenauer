@@ -9,7 +9,6 @@ const artworkNumbers = [
 const artworkTypes = [
   "Aquarelle",
   "Huile",
-  "Gravure",
   "Gravure sur métal",
   "Gravure sur linoléum",
   "Dessin",
@@ -123,7 +122,7 @@ const artworkMetadata = {
   61: { year: 1995, type: "Dessin au fusain", theme: "Provence" },
   62: { year: 1996, type: "Dessin au fusain", theme: "Provence" },
   63: {
-    type: "Gravure",
+    type: "Gravure sur linoléum",
     title: "Epreuve d'artiste",
     theme: "Cubisme",
     dimensions: "34x24",
