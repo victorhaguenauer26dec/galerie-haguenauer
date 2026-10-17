@@ -272,7 +272,7 @@ function showRandomFeaturedArtwork() {
 }
 
 showRandomFeaturedArtwork();
-window.setInterval(showRandomFeaturedArtwork, 5000);
+window.setInterval(showRandomFeaturedArtwork, 10000);
 
 window.addEventListener("hashchange", showRandomFeaturedArtwork);
 
