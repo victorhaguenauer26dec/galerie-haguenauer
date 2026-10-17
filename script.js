@@ -137,8 +137,7 @@ const emptyGallery = document.querySelector("#gallery-empty");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
 const lightboxDetails = dialog.querySelector("#lightbox-details");
-const fullscreenButton = dialog.querySelector(".lightbox-fullscreen");
-const fullscreenStatus = dialog.querySelector(".lightbox-fullscreen-status");
+const expandButton = dialog.querySelector(".lightbox-expand");
 let activeArtworkIndex = 0;
 let featuredArtworkIndex = -1;
 const artworkCards = [];
@@ -296,45 +295,22 @@ dialog.querySelector(".lightbox-close").addEventListener("click", () => {
   dialog.close();
 });
 
-function updateFullscreenButton() {
-  const isFullscreen = document.fullscreenElement === dialog;
-  const label = isFullscreen
-    ? "Quitter le plein écran"
-    : "Afficher en plein écran";
-  fullscreenButton.setAttribute("aria-label", label);
-  fullscreenButton.title = label;
-  fullscreenButton.setAttribute("aria-pressed", String(isFullscreen));
-}
-
-fullscreenButton.addEventListener("click", async () => {
-  fullscreenStatus.hidden = true;
-  fullscreenStatus.textContent = "";
-
-  try {
-    if (document.fullscreenElement === dialog) {
-      await document.exitFullscreen();
-      return;
-    }
-
-    if (typeof dialog.requestFullscreen !== "function") {
-      fullscreenStatus.textContent =
-        "Le plein écran n’est pas disponible dans ce navigateur.";
-      fullscreenStatus.hidden = false;
-      return;
-    }
-
-    await dialog.requestFullscreen();
-  } catch {
-    fullscreenStatus.textContent =
-      document.fullscreenElement === dialog
-        ? "Le plein écran n’a pas pu être quitté."
-        : "Le plein écran n’a pas pu être activé. Vérifiez les autorisations du navigateur.";
-    fullscreenStatus.hidden = false;
-  }
+expandButton.addEventListener("click", () => {
+  const isExpanded = dialog.classList.toggle("lightbox--artwork-large");
+  const label = isExpanded ? "Revenir à la fiche" : "Agrandir l’œuvre";
+  expandButton.setAttribute("aria-label", label);
+  expandButton.title = label;
+  expandButton.setAttribute("aria-pressed", String(isExpanded));
+  expandButton.textContent = isExpanded ? "⤡" : "⤢";
 });
 
-document.addEventListener("fullscreenchange", updateFullscreenButton);
-updateFullscreenButton();
+dialog.addEventListener("close", () => {
+  dialog.classList.remove("lightbox--artwork-large");
+  expandButton.setAttribute("aria-label", "Agrandir l’œuvre");
+  expandButton.title = "Agrandir l’œuvre";
+  expandButton.setAttribute("aria-pressed", "false");
+  expandButton.textContent = "⤢";
+});
 
 dialog.querySelector(".lightbox-previous").addEventListener("click", () => {
   showArtwork(activeArtworkIndex - 1);

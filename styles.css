@@ -504,17 +504,6 @@ h2 {
   display: grid;
 }
 
-.lightbox:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 60px clamp(56px, 8vw, 120px);
-  border: 0;
-  place-content: center;
-}
-
 .lightbox::backdrop {
   background: rgba(13, 16, 14, 0.88);
   backdrop-filter: blur(4px);
@@ -528,9 +517,33 @@ h2 {
   min-width: 0;
 }
 
-.lightbox:fullscreen .lightbox-content {
-  width: min(1440px, 100%);
-  margin: 0 auto;
+.lightbox[open].lightbox--artwork-large {
+  display: block;
+  width: min(1500px, calc(100% - 32px));
+  height: min-content;
+  max-height: calc(100vh - 32px);
+  padding: 58px 70px 50px;
+}
+
+.lightbox--artwork-large .lightbox-content {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.lightbox--artwork-large .lightbox-figure {
+  height: auto;
+  grid-template-rows: auto auto;
+}
+
+.lightbox--artwork-large .lightbox-image {
+  height: auto;
+  max-height: min(78vh, 850px);
+}
+
+.lightbox--artwork-large .lightbox-details,
+.lightbox--artwork-large .lightbox-help {
+  display: none;
 }
 
 .lightbox-figure {
@@ -578,7 +591,7 @@ h2 {
 
 .lightbox-close,
 .lightbox-arrow,
-.lightbox-fullscreen {
+.lightbox-expand {
   position: absolute;
   display: grid;
   place-items: center;
@@ -599,7 +612,7 @@ h2 {
   font-weight: 300;
 }
 
-.lightbox-fullscreen {
+.lightbox-expand {
   top: 15px;
   right: 60px;
   width: 36px;
@@ -632,15 +645,6 @@ h2 {
   color: rgba(245, 242, 235, 0.57);
   font-size: 10px;
   text-align: center;
-}
-
-.lightbox-fullscreen-status {
-  position: absolute;
-  top: 18px;
-  right: 112px;
-  margin: 0;
-  color: #f1c9a9;
-  font-size: 11px;
 }
 
 @media (max-width: 760px) {
@@ -732,10 +736,6 @@ h2 {
     padding: 48px 43px 59px;
   }
 
-  .lightbox:fullscreen {
-    padding: 54px 40px 60px;
-  }
-
   .lightbox-content {
     grid-template-columns: 1fr;
     gap: 15px;
@@ -743,10 +743,6 @@ h2 {
 
   .lightbox-image {
     max-height: 55vh;
-  }
-
-  .lightbox:fullscreen .lightbox-image {
-    max-height: 45vh;
   }
 
   .lightbox-details {
@@ -771,8 +767,17 @@ h2 {
     right: 5px;
   }
 
-  .lightbox-fullscreen {
+  .lightbox-expand {
     right: 50px;
+  }
+
+  .lightbox--artwork-large {
+    width: calc(100% - 20px);
+    padding: 54px 40px 42px;
+  }
+
+  .lightbox--artwork-large .lightbox-image {
+    max-height: 76vh;
   }
 }
 
