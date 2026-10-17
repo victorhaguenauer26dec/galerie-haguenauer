@@ -9,6 +9,7 @@ const artworkNumbers = [
 const artworkTypes = [
   "Aquarelle",
   "Huile",
+  "Gravure",
   "Gravure sur métal",
   "Gravure sur linoléum",
   "Dessin",
@@ -54,17 +55,17 @@ const artworkMetadata = {
   },
   28: { year: 2001, type: "Dessin au fusain", place: "Provence" },
   29: { type: "Dessin au fusain", place: "Provence" },
-  30: { year: 1985, type: "Huile", place: "Bretagne" },
-  31: { year: 2000, type: "Huile", place: "Provence" },
-  32: { year: 1982, type: "Huile", place: "Provence" },
-  33: { type: "Huile", place: "Provence" },
+  30: { year: 1985, type: "Acrylique", place: "Bretagne" },
+  31: { year: 2000, type: "Acrylique", place: "Provence" },
+  32: { year: 1982, type: "Acrylique", place: "Provence" },
+  33: { type: "Acrylique", place: "Provence" },
   34: { year: 2001, type: "Dessin au fusain", place: "Bretagne" },
-  35: { year: 1980, type: "Huile", place: "Provence" },
-  36: { year: 1979, type: "Huile" },
-  37: { year: 1985, type: "Huile", place: "Provence" },
-  38: { year: 1987, type: "Huile", place: "Provence" },
-  39: { type: "Huile" },
-  40: { year: 1982, type: "Acrylique" },
+  35: { year: 1980, type: "Acrylique", place: "Provence" },
+  36: { year: 1979, type: "Acrylique" },
+  37: { year: 1985, type: "Acrylique", place: "Provence" },
+  38: { year: 1987, type: "Acrylique", place: "Provence" },
+  39: { type: "Acrylique" },
+  40: { year: 1982, type: "Huile" },
   41: { type: "Dessin au crayon", place: "Bretagne" },
   42: { year: 1996, type: "Dessin au crayon", place: "Provence" },
   43: { year: 2003, type: "Aquarelle", place: "Provence" },
@@ -97,8 +98,8 @@ const artworkMetadata = {
     title: "Forêt Engloutie - Vosges",
     place: "Lorraine",
   },
-  54: { year: 2001, type: "Acrylique", place: "Provence" },
-  55: { year: 1981, type: "Huile", place: "Lorraine" },
+  54: { year: 2001, type: "Huile", place: "Provence" },
+  55: { year: 1981, type: "Acrylique", place: "Lorraine" },
   56: { year: 1997, type: "Dessin au fusain", place: "Provence" },
   57: { year: 1997, type: "Dessin au fusain", place: "Provence" },
   58: { year: 1978, type: "Aquarelle" },
@@ -106,15 +107,23 @@ const artworkMetadata = {
   60: { year: 1993, type: "Dessin au fusain", place: "Provence" },
   61: { year: 1995, type: "Dessin au fusain", place: "Provence" },
   62: { year: 1996, type: "Dessin au fusain", place: "Provence" },
+  63: { type: "Gravure", title: "Epreuve d'artiste" },
+  64: { year: 1995, type: "Acrylique", title: "Bassin d'Arcachon", place: "Bretagne" },
 };
 
-const artworks = artworkNumbers.map((number, index) => {
+const artworkFiles = artworkNumbers
+  .map((number) => `100_${String(number).padStart(4, "0")}.jpg`)
+  .concat(["20261017_094442.jpg", "20261017_094709.jpg"]);
+
+const artworks = artworkFiles.map((file, index) => {
   const metadata = artworkMetadata[index + 1] ?? {};
   return {
-    src: `images/100_${String(number).padStart(4, "0")}.jpg`,
+    src: `images/${file}`,
+    title: metadata.title ?? "",
     label: metadata.title || `Œuvre ${String(index + 1).padStart(2, "0")}`,
     year: metadata.year ?? null,
     type: metadata.type ?? "",
+    style: metadata.style ?? "",
     place: metadata.place ?? "",
   };
 });
@@ -127,7 +136,7 @@ const artworkCount = document.querySelector("#gallery-count");
 const emptyGallery = document.querySelector("#gallery-empty");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
-const lightboxYear = dialog.querySelector("#lightbox-year");
+const lightboxDetails = dialog.querySelector("#lightbox-details");
 let activeArtworkIndex = 0;
 let featuredArtworkIndex = -1;
 const artworkCards = [];
@@ -198,7 +207,21 @@ function showArtwork(index) {
   lightboxImage.src = artwork.src;
   lightboxImage.alt = `${artwork.label} de René HAGUENAUER`;
   lightboxTitle.textContent = artwork.label;
-  lightboxYear.textContent = formatArtworkDetails(artwork);
+  lightboxDetails.replaceChildren();
+
+  [
+    ["Année", artwork.year],
+    ["Type d’œuvre", artwork.type],
+    ["Titre de l’œuvre", artwork.title],
+    ["Style", artwork.style],
+    ["Lieux", artwork.place],
+  ].forEach(([label, value]) => {
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const description = document.createElement("dd");
+    description.textContent = value || "Non renseigné";
+    lightboxDetails.append(term, description);
+  });
 }
 
 function filterArtworks() {

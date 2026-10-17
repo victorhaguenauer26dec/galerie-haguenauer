@@ -90,10 +90,13 @@
     <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-title">
       <button class="lightbox-close" type="button" aria-label="Fermer l’image agrandie">×</button>
       <button class="lightbox-arrow lightbox-previous" type="button" aria-label="Voir l’œuvre précédente">←</button>
-      <figure class="lightbox-figure">
-        <img class="lightbox-image" src="" alt="">
-        <figcaption><span id="lightbox-title"></span> <span id="lightbox-year"></span></figcaption>
-      </figure>
+      <div class="lightbox-content">
+        <figure class="lightbox-figure">
+          <img class="lightbox-image" src="" alt="">
+          <figcaption id="lightbox-title"></figcaption>
+        </figure>
+        <dl class="lightbox-details" id="lightbox-details"></dl>
+      </div>
       <button class="lightbox-arrow lightbox-next" type="button" aria-label="Voir l’œuvre suivante">→</button>
       <p class="lightbox-help">Utilisez les flèches du clavier pour parcourir les œuvres</p>
     </dialog>

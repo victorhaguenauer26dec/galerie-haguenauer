@@ -489,19 +489,32 @@ h2 {
 
 .lightbox {
   position: fixed;
-  width: min(1040px, calc(100% - 32px));
+  width: min(1120px, calc(100% - 32px));
   max-width: none;
   max-height: calc(100% - 32px);
   padding: 50px 70px 64px;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.13);
   background: #1e211f;
   color: #f5f2eb;
 }
 
+.lightbox[open] {
+  display: grid;
+}
+
 .lightbox::backdrop {
   background: rgba(13, 16, 14, 0.88);
   backdrop-filter: blur(4px);
+}
+
+.lightbox-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: center;
+  gap: 28px;
+  min-width: 0;
 }
 
 .lightbox-figure {
@@ -522,6 +535,29 @@ h2 {
   color: #e3ded3;
   font-family: var(--serif);
   font-size: 16px;
+  text-align: center;
+}
+
+.lightbox-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  margin: 0;
+}
+
+.lightbox-details dt {
+  margin-top: 10px;
+  color: rgba(245, 242, 235, 0.58);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lightbox-details dd {
+  margin: 0;
+  color: #f5f2eb;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .lightbox-close,
@@ -660,6 +696,24 @@ h2 {
   .lightbox {
     width: calc(100% - 20px);
     padding: 48px 43px 59px;
+  }
+
+  .lightbox-content {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .lightbox-image {
+    max-height: 55vh;
+  }
+
+  .lightbox-details {
+    grid-template-columns: minmax(80px, 0.6fr) minmax(0, 1fr);
+    gap: 5px 12px;
+  }
+
+  .lightbox-details dt {
+    margin-top: 4px;
   }
 
   .lightbox-arrow {
