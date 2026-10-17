@@ -213,6 +213,13 @@ h2 {
   text-decoration: none;
 }
 
+.hero-artwork-visual {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .hero-artwork::after {
   position: absolute;
   inset: 0;
@@ -222,11 +229,19 @@ h2 {
 }
 
 .hero-artwork img {
-  flex: 1;
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   min-height: 0;
   object-fit: cover;
   object-position: center;
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.hero-artwork img.is-visible {
+  opacity: 1;
 }
 
 .hero-caption {

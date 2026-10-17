@@ -181,7 +181,12 @@ const lightboxDetails = dialog.querySelector("#lightbox-details");
 const expandButton = dialog.querySelector(".lightbox-expand");
 let activeArtworkIndex = 0;
 let featuredArtworkIndex = -1;
+let featuredImageIndex = 0;
+let isFeaturedTransitioning = false;
 const artworkCards = [];
+const featuredImages = [
+  ...document.querySelectorAll(".hero-artwork-visual img"),
+];
 
 function formatArtworkDetails(artwork) {
   return [artwork.year, artwork.type, artwork.theme].filter(Boolean).join(" · ");
@@ -216,6 +221,10 @@ function appendYear(parent, year, className) {
 }
 
 function showRandomFeaturedArtwork() {
+  if (isFeaturedTransitioning) {
+    return;
+  }
+
   let nextIndex = Math.floor(Math.random() * artworks.length);
   while (artworks.length > 1 && nextIndex === featuredArtworkIndex) {
     nextIndex = Math.floor(Math.random() * artworks.length);
@@ -223,19 +232,47 @@ function showRandomFeaturedArtwork() {
 
   featuredArtworkIndex = nextIndex;
   const artwork = artworks[featuredArtworkIndex];
-  const image = document.querySelector(".hero-artwork img");
-  image.src = artwork.src;
-  image.alt = `${artwork.label} de René HAGUENAUER`;
-  image.dataset.artworkIndex = String(featuredArtworkIndex);
-  document.querySelector(".hero-caption strong").textContent = artwork.label;
-  const featuredYear = document.querySelector(".hero-artwork-year");
-  featuredYear.textContent = formatArtworkDetails(artwork);
-  featuredYear.hidden = !featuredYear.textContent;
-  document.querySelector(".hero-index").textContent =
-    `${String(featuredArtworkIndex + 1).padStart(2, "0")} / ${artworks.length}`;
+  const nextImageIndex = 1 - featuredImageIndex;
+  const nextImage = featuredImages[nextImageIndex];
+  isFeaturedTransitioning = true;
+
+  const showArtwork = () => {
+    nextImage.onload = null;
+    nextImage.onerror = null;
+    nextImage.alt = `${artwork.label} de René HAGUENAUER`;
+    nextImage.removeAttribute("aria-hidden");
+    nextImage.classList.add("is-visible");
+
+    const currentImage = featuredImages[featuredImageIndex];
+    currentImage.classList.remove("is-visible");
+    currentImage.alt = "";
+    currentImage.setAttribute("aria-hidden", "true");
+    featuredImageIndex = nextImageIndex;
+
+    document.querySelector(".hero-caption strong").textContent = artwork.label;
+    const featuredYear = document.querySelector(".hero-artwork-year");
+    featuredYear.textContent = formatArtworkDetails(artwork);
+    featuredYear.hidden = !featuredYear.textContent;
+    document.querySelector(".hero-index").textContent =
+      `${String(featuredArtworkIndex + 1).padStart(2, "0")} / ${artworks.length}`;
+    isFeaturedTransitioning = false;
+  };
+
+  nextImage.onload = showArtwork;
+  nextImage.onerror = () => {
+    nextImage.onload = null;
+    nextImage.onerror = null;
+    isFeaturedTransitioning = false;
+    console.error(`Impossible de charger l’image mise en avant : ${artwork.src}`);
+  };
+  nextImage.src = artwork.src;
+  if (nextImage.complete && nextImage.naturalWidth > 0) {
+    showArtwork();
+  }
 }
 
 showRandomFeaturedArtwork();
+window.setInterval(showRandomFeaturedArtwork, 5000);
 
 window.addEventListener("hashchange", showRandomFeaturedArtwork);
 
