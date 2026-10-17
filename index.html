@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20261017-1047">
-    <script src="script.js?v=20261017-1040" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20261017-1054">
+    <script src="script.js?v=20261017-1054" defer></script>
   </head>
   <body>
     <header class="site-header">
@@ -20,6 +20,7 @@
       </a>
       <nav class="main-nav" aria-label="Navigation principale">
         <a href="#galerie">La galerie</a>
+        <a href="#photographies">Photographies</a>
         <a href="#biographie">Biographie</a>
         <a href="#apropos">À propos</a>
       </nav>
@@ -72,6 +73,18 @@
         </div>
         <div class="artwork-grid" id="artwork-grid" aria-label="Galerie des œuvres"></div>
         <p class="gallery-empty" id="gallery-empty" role="status" hidden>Aucune œuvre ne correspond à ces filtres.</p>
+      </section>
+
+      <section class="photography-section" id="photographies" aria-labelledby="photography-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Souvenirs</p>
+            <h2 id="photography-title">Photographies</h2>
+          </div>
+          <p class="gallery-count" id="photography-count"></p>
+        </div>
+        <div class="photography-grid" id="photography-grid" aria-label="Photographies de la vie de l’artiste"></div>
+        <p class="gallery-empty" id="photography-empty" role="status" hidden>Aucune photographie pour le moment.</p>
       </section>
 
       <section class="biography-section" id="biographie" aria-labelledby="biography-title">

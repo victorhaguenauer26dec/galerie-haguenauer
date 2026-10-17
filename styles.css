@@ -275,6 +275,10 @@ h2 {
   background: #eeebe3;
 }
 
+.photography-section {
+  padding: 86px 7.5% 108px;
+}
+
 .section-heading {
   display: flex;
   align-items: end;
@@ -347,6 +351,25 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 32px 24px;
+}
+
+.photography-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+.photography-card {
+  min-width: 0;
+  margin: 0;
+}
+
+.photography-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--paper-deep);
+  object-fit: contain;
 }
 
 .artwork-card {
@@ -721,6 +744,10 @@ h2 {
     padding: 68px 6% 78px;
   }
 
+  .photography-section {
+    padding: 68px 6% 78px;
+  }
+
   .gallery-filters {
     flex-wrap: wrap;
     gap: 12px;
@@ -731,6 +758,11 @@ h2 {
   }
 
   .artwork-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px 15px;
+  }
+
+  .photography-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 25px 15px;
   }
@@ -821,6 +853,14 @@ h2 {
 }
 
 @media (max-width: 420px) {
+  .site-header {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
   .brand-name {
     font-size: 10px;
   }
@@ -835,7 +875,9 @@ h2 {
   }
 
   .main-nav {
-    gap: 12px;
+    width: 100%;
+    justify-content: center;
+    gap: clamp(8px, 3vw, 12px);
   }
 
   .main-nav a {
@@ -849,6 +891,10 @@ h2 {
   .gallery-count {
     margin-top: 15px;
     font-size: 9px;
+  }
+
+  .photography-grid {
+    grid-template-columns: 1fr;
   }
 
   .gallery-filters {

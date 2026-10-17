@@ -15,7 +15,6 @@ const artworkTypes = [
   "Dessin au fusain",
   "Dessin au crayon",
   "Acrylique",
-  "Photographie",
 ];
 const artworkThemes = [
   "Lorraine",
@@ -42,7 +41,7 @@ const artworkMetadata = {
   5: { type: "Dessin au fusain", theme: "Provence" },
   6: { year: 1996, type: "Dessin au fusain", theme: "Provence" },
   7: { year: 2003, type: "Dessin au fusain", theme: "Provence" },
-  8: { title: "Vue de l'atelier" },
+  8: { type: "Photographie", title: "Vue de l'atelier" },
   9: { year: 1978, type: "Aquarelle" },
   10: { theme: "Bretagne" },
   11: { year: 1995, type: "Dessin au fusain", theme: "Provence" },
@@ -140,9 +139,23 @@ const artworkFiles = artworkNumbers
   .map((number) => `100_${String(number).padStart(4, "0")}.jpg`)
   .concat(["20261017_094442.jpg", "20261017_094709.jpg"]);
 
-const artworks = artworkFiles.map((file, index) => {
-  const metadata = artworkMetadata[index + 1] ?? {};
-  return {
+const artworkEntries = artworkFiles.map((file, index) => ({
+  file,
+  index: index + 1,
+  metadata: artworkMetadata[index + 1] ?? {},
+}));
+
+const artistPhotographs = artworkEntries
+  .filter(({ metadata }) => metadata.type === "Photographie")
+  .map(({ file, metadata }) => ({
+    src: `images/${file}`,
+    year: metadata.year ?? null,
+    description: metadata.title ?? "",
+  }));
+
+const artworks = artworkEntries
+  .filter(({ metadata }) => metadata.type !== "Photographie")
+  .map(({ file, metadata }, index) => ({
     src: `images/${file}`,
     title: metadata.title ?? "",
     label: metadata.title || `Œuvre ${String(index + 1).padStart(2, "0")}`,
@@ -150,8 +163,7 @@ const artworks = artworkFiles.map((file, index) => {
     type: metadata.type ?? "",
     theme: metadata.theme ?? "",
     dimensions: metadata.dimensions ?? "",
-  };
-});
+  }));
 
 const grid = document.querySelector("#artwork-grid");
 const dialog = document.querySelector("#lightbox");
@@ -160,6 +172,9 @@ const themeFilter = document.querySelector("#filter-theme");
 const periodFilter = document.querySelector("#filter-period");
 const artworkCount = document.querySelector("#gallery-count");
 const emptyGallery = document.querySelector("#gallery-empty");
+const photographyGrid = document.querySelector("#photography-grid");
+const photographyCount = document.querySelector("#photography-count");
+const emptyPhotography = document.querySelector("#photography-empty");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
 const lightboxDetails = dialog.querySelector("#lightbox-details");
@@ -330,6 +345,36 @@ document.querySelector("#filter-reset").addEventListener("click", () => {
   periodFilter.value = "";
   filterArtworks();
 });
+
+artistPhotographs.forEach((photograph) => {
+  const card = document.createElement("figure");
+  card.className = "photography-card";
+
+  const image = document.createElement("img");
+  image.src = photograph.src;
+  image.alt = photograph.description
+    ? `${photograph.description}, photographie de René HAGUENAUER`
+    : "Photographie de la vie de René HAGUENAUER";
+  image.loading = "lazy";
+  image.decoding = "async";
+
+  const caption = document.createElement("figcaption");
+  caption.className = "artwork-caption";
+
+  const description = document.createElement("strong");
+  description.textContent = photograph.description || "Photographie";
+
+  const year = document.createElement("span");
+  year.textContent = photograph.year ?? "";
+
+  caption.append(description, year);
+  card.append(image, caption);
+  photographyGrid.append(card);
+});
+
+photographyCount.textContent =
+  `${artistPhotographs.length} photographie${artistPhotographs.length === 1 ? "" : "s"}`;
+emptyPhotography.hidden = artistPhotographs.length > 0;
 
 dialog.querySelector(".lightbox-close").addEventListener("click", () => {
   dialog.close();
