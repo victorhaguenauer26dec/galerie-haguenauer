@@ -294,6 +294,54 @@ h2 {
   font-size: 11px;
 }
 
+.gallery-filters {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  margin: -10px 0 30px;
+}
+
+.gallery-filters label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.gallery-filters select {
+  min-width: 190px;
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+}
+
+.filter-reset {
+  min-height: 37px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--green);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+
+.artwork-card[hidden],
+.gallery-empty[hidden] {
+  display: none;
+}
+
+.gallery-empty {
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .artwork-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -568,6 +616,15 @@ h2 {
     padding: 68px 6% 78px;
   }
 
+  .gallery-filters {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .gallery-filters select {
+    min-width: min(190px, 40vw);
+  }
+
   .artwork-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 25px 15px;
@@ -648,6 +705,18 @@ h2 {
   .gallery-count {
     margin-top: 15px;
     font-size: 9px;
+  }
+
+  .gallery-filters {
+    align-items: stretch;
+  }
+
+  .gallery-filters label {
+    flex: 1 1 100%;
+  }
+
+  .gallery-filters select {
+    width: 100%;
   }
 
   .artwork-caption strong {

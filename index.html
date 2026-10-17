@@ -46,9 +46,25 @@
             <p class="eyebrow">Collection</p>
             <h2 id="gallery-title">Les œuvres</h2>
           </div>
-          <p class="gallery-count"><span id="artwork-count">62</span> œuvres à découvrir</p>
+          <p class="gallery-count" id="gallery-count">62 œuvres à découvrir</p>
+        </div>
+        <div class="gallery-filters" role="group" aria-label="Filtrer les œuvres">
+          <label>
+            Type d’œuvre
+            <select id="filter-type">
+              <option value="">Tous les types</option>
+            </select>
+          </label>
+          <label>
+            Lieux
+            <select id="filter-place">
+              <option value="">Tous les lieux</option>
+            </select>
+          </label>
+          <button class="filter-reset" id="filter-reset" type="button">Tout afficher</button>
         </div>
         <div class="artwork-grid" id="artwork-grid" aria-label="Galerie des œuvres"></div>
+        <p class="gallery-empty" id="gallery-empty" role="status" hidden>Aucune œuvre ne correspond à ces filtres.</p>
       </section>
 
       <section class="about-section" id="apropos" aria-labelledby="about-title">
