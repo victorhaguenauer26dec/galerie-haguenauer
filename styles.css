@@ -400,6 +400,29 @@ h2 {
   display: none;
 }
 
+.biography-section {
+  padding: 100px 15% 110px;
+  border-top: 1px solid var(--line);
+}
+
+.biography-copy {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.biography-copy h2 {
+  margin: 12px 0 28px;
+  font-size: clamp(36px, 4vw, 48px);
+  letter-spacing: -0.03em;
+}
+
+.biography-copy > p:not(.eyebrow) {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
 .about-section {
   position: relative;
   display: grid;
@@ -707,6 +730,10 @@ h2 {
   .about-section {
     grid-template-columns: 1fr;
     gap: 23px;
+    padding: 72px 8% 82px;
+  }
+
+  .biography-section {
     padding: 72px 8% 82px;
   }
 
