@@ -18,30 +18,45 @@ const artworkTypes = [
   "Acrylique",
   "Photographie",
 ];
-const artworkPlaces = ["Lorraine", "Provence", "Bretagne"];
+const artworkThemes = [
+  "Lorraine",
+  "Provence",
+  "Bretagne",
+  "Cubisme",
+  "Portrait",
+  "Nature morte",
+];
+const artworkPeriods = [
+  { label: "1945-1960", start: 1945, end: 1960 },
+  { label: "1960-1970", start: 1960, end: 1970 },
+  { label: "1970-1980", start: 1970, end: 1980 },
+  { label: "1980-1990", start: 1980, end: 1990 },
+  { label: "1990-2000", start: 1990, end: 2000 },
+  { label: "2000-2010", start: 2000, end: 2011 },
+];
 
 const artworkMetadata = {
   1: { year: 1985, type: "Aquarelle" },
   2: { year: 1979, type: "Aquarelle" },
-  3: { year: 1978, type: "Aquarelle", place: "Bretagne" },
-  4: { year: 1978, type: "Aquarelle", place: "Bretagne" },
-  5: { type: "Dessin au fusain", place: "Provence" },
-  6: { year: 1996, type: "Dessin au fusain", place: "Provence" },
-  7: { year: 2003, type: "Dessin au fusain", place: "Provence" },
+  3: { year: 1978, type: "Aquarelle", theme: "Bretagne" },
+  4: { year: 1978, type: "Aquarelle", theme: "Bretagne" },
+  5: { type: "Dessin au fusain", theme: "Provence" },
+  6: { year: 1996, type: "Dessin au fusain", theme: "Provence" },
+  7: { year: 2003, type: "Dessin au fusain", theme: "Provence" },
   8: { title: "Vue de l'atelier" },
   9: { year: 1978, type: "Aquarelle" },
-  10: { place: "Bretagne" },
-  11: { year: 1995, type: "Dessin au fusain", place: "Provence" },
-  12: { year: 2003, type: "Aquarelle", place: "Provence" },
-  13: { type: "Dessin au fusain", place: "Bretagne" },
-  14: { year: 2001, type: "Dessin au fusain", place: "Provence" },
-  15: { year: 1996, type: "Dessin au fusain", place: "Provence" },
+  10: { theme: "Bretagne" },
+  11: { year: 1995, type: "Dessin au fusain", theme: "Provence" },
+  12: { year: 2003, type: "Aquarelle", theme: "Provence" },
+  13: { type: "Dessin au fusain", theme: "Bretagne" },
+  14: { year: 2001, type: "Dessin au fusain", theme: "Provence" },
+  15: { year: 1996, type: "Dessin au fusain", theme: "Provence" },
   16: { year: 1995, type: "Aquarelle" },
-  17: { type: "Dessin au fusain", place: "Provence" },
+  17: { type: "Dessin au fusain", theme: "Provence" },
   18: { type: "Aquarelle" },
-  19: { year: 1999, type: "Dessin au fusain", place: "Provence" },
-  20: { year: 2001, type: "Dessin au fusain", place: "Provence" },
-  21: { year: 1993, type: "Dessin au fusain", place: "Provence" },
+  19: { year: 1999, type: "Dessin au fusain", theme: "Provence" },
+  20: { year: 2001, type: "Dessin au fusain", theme: "Provence" },
+  21: { year: 1993, type: "Dessin au fusain", theme: "Provence" },
   22: { year: 1985, type: "Aquarelle" },
   23: { year: 1985, type: "Aquarelle" },
   24: { type: "Aquarelle" },
@@ -51,64 +66,75 @@ const artworkMetadata = {
     year: 2003,
     type: "Dessin au fusain",
     title: "St Paul de M",
-    place: "Provence",
+    theme: "Provence",
   },
-  28: { year: 2001, type: "Dessin au fusain", place: "Provence" },
-  29: { type: "Dessin au fusain", place: "Provence" },
-  30: { year: 1985, type: "Acrylique", place: "Bretagne" },
-  31: { year: 2000, type: "Acrylique", place: "Provence" },
-  32: { year: 1982, type: "Acrylique", place: "Provence" },
-  33: { type: "Acrylique", place: "Provence" },
-  34: { year: 2001, type: "Dessin au fusain", place: "Bretagne" },
-  35: { year: 1980, type: "Acrylique", place: "Provence" },
+  28: { year: 2001, type: "Dessin au fusain", theme: "Provence" },
+  29: { type: "Dessin au fusain", theme: "Provence" },
+  30: { year: 1985, type: "Acrylique", theme: "Bretagne" },
+  31: { year: 2000, type: "Acrylique", theme: "Provence" },
+  32: { year: 1982, type: "Acrylique", theme: "Provence" },
+  33: { type: "Acrylique", theme: "Provence" },
+  34: { year: 2001, type: "Dessin au fusain", theme: "Bretagne" },
+  35: { year: 1980, type: "Acrylique", theme: "Provence" },
   36: { year: 1979, type: "Acrylique" },
-  37: { year: 1985, type: "Acrylique", place: "Provence" },
-  38: { year: 1987, type: "Acrylique", place: "Provence" },
+  37: { year: 1985, type: "Acrylique", theme: "Provence" },
+  38: { year: 1987, type: "Acrylique", theme: "Provence" },
   39: { type: "Acrylique" },
   40: { year: 1982, type: "Huile" },
-  41: { type: "Dessin au crayon", place: "Bretagne" },
-  42: { year: 1996, type: "Dessin au crayon", place: "Provence" },
-  43: { year: 2003, type: "Aquarelle", place: "Provence" },
-  44: { year: 2003, type: "Dessin au fusain", place: "Provence" },
+  41: { type: "Dessin au crayon", theme: "Bretagne" },
+  42: { year: 1996, type: "Dessin au crayon", theme: "Provence" },
+  43: { year: 2003, type: "Aquarelle", theme: "Provence" },
+  44: { year: 2003, type: "Dessin au fusain", theme: "Provence" },
   45: {
     year: 1983,
     type: "Dessin au crayon",
     title: "Eygalières",
-    place: "Provence",
+    theme: "Provence",
   },
   46: {
     type: "Aquarelle",
     title: "Les-Baux-de-Provence",
-    place: "Provence",
+    theme: "Provence",
   },
-  47: { year: 1992, type: "Dessin au crayon", place: "Provence" },
+  47: { year: 1992, type: "Dessin au crayon", theme: "Provence" },
   48: {
     year: 1995,
     type: "Dessin au crayon",
     title: "Sainte Sixtine",
-    place: "Provence",
+    theme: "Provence",
   },
-  49: { year: 1972, type: "Aquarelle", place: "Bretagne" },
-  50: { year: 1978, type: "Aquarelle", place: "Bretagne" },
-  51: { type: "Aquarelle", place: "Bretagne" },
+  49: { year: 1972, type: "Aquarelle", theme: "Bretagne" },
+  50: { year: 1978, type: "Aquarelle", theme: "Bretagne" },
+  51: { type: "Aquarelle", theme: "Bretagne" },
   52: { type: "Aquarelle" },
   53: {
     year: 1981,
     type: "Dessin au crayon",
     title: "Forêt Engloutie - Vosges",
-    place: "Lorraine",
+    theme: "Lorraine",
   },
-  54: { year: 2001, type: "Huile", place: "Provence" },
-  55: { year: 1981, type: "Acrylique", place: "Lorraine" },
-  56: { year: 1997, type: "Dessin au fusain", place: "Provence" },
-  57: { year: 1997, type: "Dessin au fusain", place: "Provence" },
+  54: { year: 2001, type: "Huile", theme: "Provence" },
+  55: { year: 1981, type: "Acrylique", theme: "Lorraine" },
+  56: { year: 1997, type: "Dessin au fusain", theme: "Provence" },
+  57: { year: 1997, type: "Dessin au fusain", theme: "Provence" },
   58: { year: 1978, type: "Aquarelle" },
-  59: { year: 2000, type: "Dessin au fusain", place: "Provence" },
-  60: { year: 1993, type: "Dessin au fusain", place: "Provence" },
-  61: { year: 1995, type: "Dessin au fusain", place: "Provence" },
-  62: { year: 1996, type: "Dessin au fusain", place: "Provence" },
-  63: { type: "Gravure", title: "Epreuve d'artiste" },
-  64: { year: 1995, type: "Acrylique", title: "Bassin d'Arcachon", place: "Bretagne" },
+  59: { year: 2000, type: "Dessin au fusain", theme: "Provence" },
+  60: { year: 1993, type: "Dessin au fusain", theme: "Provence" },
+  61: { year: 1995, type: "Dessin au fusain", theme: "Provence" },
+  62: { year: 1996, type: "Dessin au fusain", theme: "Provence" },
+  63: {
+    type: "Gravure",
+    title: "Epreuve d'artiste",
+    theme: "Cubisme",
+    dimensions: "34x24",
+  },
+  64: {
+    year: 1995,
+    type: "Acrylique",
+    title: "Bassin d'Arcachon",
+    theme: "Bretagne",
+    dimensions: "80x53",
+  },
 };
 
 const artworkFiles = artworkNumbers
@@ -124,14 +150,16 @@ const artworks = artworkFiles.map((file, index) => {
     year: metadata.year ?? null,
     type: metadata.type ?? "",
     style: metadata.style ?? "",
-    place: metadata.place ?? "",
+    theme: metadata.theme ?? "",
+    dimensions: metadata.dimensions ?? "",
   };
 });
 
 const grid = document.querySelector("#artwork-grid");
 const dialog = document.querySelector("#lightbox");
 const typeFilter = document.querySelector("#filter-type");
-const placeFilter = document.querySelector("#filter-place");
+const themeFilter = document.querySelector("#filter-theme");
+const periodFilter = document.querySelector("#filter-period");
 const artworkCount = document.querySelector("#gallery-count");
 const emptyGallery = document.querySelector("#gallery-empty");
 const lightboxImage = dialog.querySelector(".lightbox-image");
@@ -143,7 +171,7 @@ let featuredArtworkIndex = -1;
 const artworkCards = [];
 
 function formatArtworkDetails(artwork) {
-  return [artwork.year, artwork.type, artwork.place].filter(Boolean).join(" · ");
+  return [artwork.year, artwork.type, artwork.theme].filter(Boolean).join(" · ");
 }
 
 function populateFilter(select, options) {
@@ -156,7 +184,11 @@ function populateFilter(select, options) {
 }
 
 populateFilter(typeFilter, artworkTypes);
-populateFilter(placeFilter, artworkPlaces);
+populateFilter(themeFilter, artworkThemes);
+populateFilter(
+  periodFilter,
+  artworkPeriods.map((period) => period.label),
+);
 
 function appendYear(parent, year, className) {
   if (!year) {
@@ -215,7 +247,8 @@ function showArtwork(index) {
     ["Type d’œuvre", artwork.type],
     ["Titre de l’œuvre", artwork.title],
     ["Style", artwork.style],
-    ["Lieux", artwork.place],
+    ["Thématique", artwork.theme],
+    ["Dimensions (cm)", artwork.dimensions],
   ].forEach(([label, value]) => {
     const term = document.createElement("dt");
     term.textContent = label;
@@ -229,8 +262,16 @@ function filterArtworks() {
   let visibleCount = 0;
   artworkCards.forEach(({ card, artwork }) => {
     const matchesType = !typeFilter.value || artwork.type === typeFilter.value;
-    const matchesPlace = !placeFilter.value || artwork.place === placeFilter.value;
-    card.hidden = !(matchesType && matchesPlace);
+    const selectedPeriod = artworkPeriods.find(
+      (period) => period.label === periodFilter.value,
+    );
+    const matchesTheme = !themeFilter.value || artwork.theme === themeFilter.value;
+    const matchesPeriod =
+      !selectedPeriod ||
+      (artwork.year !== null &&
+        artwork.year >= selectedPeriod.start &&
+        artwork.year < selectedPeriod.end);
+    card.hidden = !(matchesType && matchesTheme && matchesPeriod);
     if (!card.hidden) {
       visibleCount += 1;
     }
@@ -266,7 +307,7 @@ artworks.forEach((artwork, index) => {
   number.textContent = [
     artwork.year,
     artwork.type,
-    artwork.place,
+    artwork.theme,
     `${String(index + 1).padStart(2, "0")} / ${artworks.length}`,
   ].filter(Boolean).join(" · ");
 
@@ -284,10 +325,12 @@ artworks.forEach((artwork, index) => {
 
 artworkCount.textContent = `${artworks.length} œuvres à découvrir`;
 typeFilter.addEventListener("change", filterArtworks);
-placeFilter.addEventListener("change", filterArtworks);
+themeFilter.addEventListener("change", filterArtworks);
+periodFilter.addEventListener("change", filterArtworks);
 document.querySelector("#filter-reset").addEventListener("click", () => {
   typeFilter.value = "";
-  placeFilter.value = "";
+  themeFilter.value = "";
+  periodFilter.value = "";
   filterArtworks();
 });
 
