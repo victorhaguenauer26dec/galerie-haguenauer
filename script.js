@@ -135,23 +135,41 @@ const artworkMetadata = {
   },
 };
 
-const artworkFiles = artworkNumbers
-  .map((number) => `100_${String(number).padStart(4, "0")}.jpg`)
-  .concat(["20261017_094442.jpg", "20261017_094709.jpg"]);
+const artworkMetadataByFile = new Map(
+  artworkNumbers.map((number, index) => [
+    `100_${String(number).padStart(4, "0")}.jpg`,
+    artworkMetadata[index + 1] ?? {},
+  ]),
+);
+artworkMetadataByFile.set("20261017_094442.jpg", artworkMetadata[63]);
+artworkMetadataByFile.set("20261017_094709.jpg", artworkMetadata[64]);
 
-const artworkEntries = artworkFiles.map((file, index) => ({
+const artworkFiles = [
+  "20261017_094709.jpg",
+  "20261017_094442.jpg",
+  ...artworkNumbers
+    .slice(2)
+    .filter((number) => number !== 788)
+    .map((number) => `100_${String(number).padStart(4, "0")}.jpg`),
+  "100_0781.jpg",
+  "100_0782.jpg",
+];
+
+const artworkEntries = artworkFiles.map((file) => ({
   file,
-  index: index + 1,
-  metadata: artworkMetadata[index + 1] ?? {},
+  metadata: artworkMetadataByFile.get(file) ?? {},
 }));
 
-const artistPhotographs = artworkEntries
-  .filter(({ metadata }) => metadata.type === "Photographie")
-  .map(({ file, metadata }) => ({
-    src: `images/${file}`,
-    year: metadata.year ?? null,
-    description: metadata.title ?? "",
-  }));
+const artistPhotographs = [
+  {
+    file: "100_0788.jpg",
+    metadata: artworkMetadataByFile.get("100_0788.jpg") ?? {},
+  },
+].map(({ file, metadata }) => ({
+  src: `images/${file}`,
+  year: metadata.year ?? null,
+  description: metadata.title ?? "",
+}));
 
 const artworks = artworkEntries
   .filter(({ metadata }) => metadata.type !== "Photographie")
