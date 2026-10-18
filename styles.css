@@ -550,6 +550,23 @@ h2 {
   font-size: 10px;
 }
 
+.site-visit-counter {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 20px;
+}
+
+.site-visit-counter[hidden] {
+  display: none;
+}
+
+.site-visit-counter img {
+  display: block;
+  width: 62px;
+  height: 20px;
+}
+
 .footer-brand {
   font-family: var(--serif);
   font-size: 13px;

@@ -193,6 +193,10 @@ const emptyGallery = document.querySelector("#gallery-empty");
 const photographyGrid = document.querySelector("#photography-grid");
 const photographyCount = document.querySelector("#photography-count");
 const emptyPhotography = document.querySelector("#photography-empty");
+const siteVisitCounterContainer = document.querySelector(
+  "#site-visit-counter-container",
+);
+const siteVisitCounter = document.querySelector("#site-visit-counter");
 const lightboxImage = dialog.querySelector(".lightbox-image");
 const lightboxTitle = dialog.querySelector("#lightbox-title");
 const lightboxDetails = dialog.querySelector("#lightbox-details");
@@ -205,6 +209,14 @@ const artworkCards = [];
 const featuredImages = [
   ...document.querySelectorAll(".hero-artwork-visual img"),
 ];
+
+if (
+  window.location.protocol !== "file:" &&
+  !window.location.hostname.endsWith(".localhost")
+) {
+  siteVisitCounterContainer.hidden = false;
+  siteVisitCounter.src = `${siteVisitCounter.dataset.counterUrl}&visit=${Date.now()}`;
+}
 
 function formatArtworkDetails(artwork) {
   return [artwork.year, artwork.type, artwork.theme].filter(Boolean).join(" · ");
