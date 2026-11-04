@@ -141,15 +141,23 @@ const artworkMetadataByFile = new Map(
     artworkMetadata[index + 1] ?? {},
   ]),
 );
+artworkMetadataByFile.set("1.png", {
+  year: 1982,
+  type: "Acrylique",
+  title: "Coline de Sion en Hiver",
+  theme: "Lorraine",
+  dimensions: "63x40",
+});
 artworkMetadataByFile.set("20261017_094442.jpg", artworkMetadata[63]);
 artworkMetadataByFile.set("20261017_094709.jpg", artworkMetadata[64]);
 
 const artworkFiles = [
   "20261017_094709.jpg",
+  "1.png",
   "20261017_094442.jpg",
   ...artworkNumbers
     .slice(2)
-    .filter((number) => number !== 788)
+    .filter((number) => ![788, 845, 937].includes(number))
     .map((number) => `100_${String(number).padStart(4, "0")}.jpg`),
   "100_0781.jpg",
   "100_0782.jpg",
@@ -162,11 +170,11 @@ const artworkEntries = artworkFiles.map((file) => ({
 
 const artistPhotographs = [
   {
-    file: "100_0788.jpg",
+    file: "100_0788.JPG",
     metadata: artworkMetadataByFile.get("100_0788.jpg") ?? {},
   },
 ].map(({ file, metadata }) => ({
-  src: `images/${file}`,
+  src: `Photographies/${file}`,
   year: metadata.year ?? null,
   description: metadata.title ?? "",
 }));
