@@ -15,12 +15,50 @@ foreach ($file in @("index.html", "styles.css", "script.js")) {
   Copy-Item -LiteralPath (Join-Path $workspaceRoot $file) -Destination $outputPath
 }
 
-Copy-Item -Path (Join-Path $imageSource "*.jpg") -Destination (Join-Path $outputPath "images")
-Copy-Item -Path (Join-Path $imageSource "*.png") -Destination (Join-Path $outputPath "images")
+$catalogueScript = Join-Path $workspaceRoot "catalogue-data.js"
+if (-not (Test-Path -LiteralPath $catalogueScript)) {
+  throw "The generated catalogue file is missing. Run Mettre-a-jour-le-site.bat first."
+}
+Copy-Item -LiteralPath $catalogueScript -Destination $outputPath
 
-$photographySource = Join-Path $workspaceRoot "Photographies"
-if (Test-Path -LiteralPath $photographySource) {
-  $photographyOutput = Join-Path $outputPath "Photographies"
-  New-Item -Path $photographyOutput -ItemType Directory | Out-Null
-  Copy-Item -Path (Join-Path $photographySource "*") -Destination $photographyOutput
+$manifestPath = Join-Path $workspaceRoot "gallery-assets.json"
+if (-not (Test-Path -LiteralPath $manifestPath)) {
+  throw "The gallery asset list is missing. Run Mettre-a-jour-le-site.bat first."
+}
+
+$manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+$photographyOutput = Join-Path $outputPath "Photographies"
+New-Item -Path $photographyOutput -ItemType Directory | Out-Null
+
+$copiedAssets = @{}
+foreach ($assetPath in @($manifest.artworks) + @($manifest.photographs)) {
+  if ([string]::IsNullOrWhiteSpace($assetPath) -or $assetPath -match '(^|[\\/])\.\.([\\/]|$)') {
+    throw "Invalid path in gallery-assets.json: $assetPath"
+  }
+
+  if ($assetPath -notmatch '^(images|Photographies)/([^\\/]+)$') {
+    throw "Unsupported path in gallery-assets.json: $assetPath"
+  }
+
+  if ($copiedAssets.ContainsKey($assetPath)) {
+    throw "Duplicate path in gallery-assets.json: $assetPath"
+  }
+  $copiedAssets[$assetPath] = $true
+
+  $sourceDirectory = if ($Matches[1] -eq "images") {
+    $imageSource
+  } else {
+    Join-Path $workspaceRoot "Photographies"
+  }
+  $sourcePath = Join-Path $sourceDirectory $Matches[2]
+  if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
+    throw "A listed gallery image is missing: $sourcePath"
+  }
+
+  $destinationDirectory = if ($Matches[1] -eq "images") {
+    Join-Path $outputPath "images"
+  } else {
+    $photographyOutput
+  }
+  Copy-Item -LiteralPath $sourcePath -Destination $destinationDirectory
 }
